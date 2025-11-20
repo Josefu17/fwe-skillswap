@@ -1,0 +1,51 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: skill-swap-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: skill-swap-test
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27018:27017"
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: skill-swap-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/skill-swap-test
+
+      JWT_SECRET: your_jwt_secret
+      JWT_REFRESH_SECRET: your_refresh_token_secret
+
+      CLOUDINARY_CLOUD_NAME: your_cloud_name
+      CLOUDINARY_API_KEY: your_api_key
+      CLOUDINARY_API_SECRET: your_api_secret
+
+      EMAIL_USER: ""
+      EMAIL_PASS: ""
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: skill-swap-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "4173:4173"
+
+volumes:
+  mongo-data:

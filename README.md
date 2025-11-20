@@ -93,8 +93,8 @@ The frontend dev server will print the local URL (usually `http://localhost:5173
 
 Developed collaboratively by four students at Hochschule Darmstadt:
 
-* Backend development – **Dias Baikenov**, **Bogdan Polskiy**
-* Frontend development – **Yusuf Birdane**, **Arian Farzad**
+* Backend development – **[REDACTED]**, **[REDACTED]**
+* Frontend development – **[REDACTED]**, **[REDACTED]**
 
 ## License
 

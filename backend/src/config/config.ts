@@ -1,8 +1,18 @@
 import dotenv from 'dotenv';
 
-export const loadEnv = (path: string) => {
-  dotenv.config({ path });
-  if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
+export const loadEnv = (path?: string) => {
+  if (path) {
+    dotenv.config({ path });
+  } else {
+    // Default: .env in CWD *and* whatever the environment already has
+    dotenv.config();
+  }
+
+  if (
+    !process.env.MONGO_URI ||
+    !process.env.JWT_SECRET ||
+    !process.env.JWT_REFRESH_SECRET
+  ) {
     throw new Error('Missing necessary environment variables.');
   }
 };

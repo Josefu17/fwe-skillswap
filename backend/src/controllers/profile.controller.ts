@@ -2,10 +2,6 @@ import { Request, Response } from 'express';
 import Profile, { IProfile } from '../models/Profile';
 import mongoose, { FilterQuery } from 'mongoose';
 import logger from '../utils/logger';
-import {
-  hasDuplicates,
-  isValidSkillOrInterest,
-} from '../../../shared/validation';
 import cloudinary from '../config/cloudinary';
 import multer from 'multer';
 import { countWords, isNotBlank } from '../utils/stringUtils';
@@ -14,6 +10,10 @@ import {
   getMessageStats,
   getSessionStats,
 } from '../helpers/statisticsHelpers';
+import {
+  hasDuplicates,
+  isValidSkillOrInterest,
+} from '../../../shared/validation';
 
 declare module 'express' {
   export interface Request {

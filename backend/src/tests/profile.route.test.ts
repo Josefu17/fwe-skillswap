@@ -5,7 +5,7 @@ import Profile, { IProfile } from '../models/Profile';
 import { env } from '../config/config';
 import { setupTestDB } from './testSetup';
 
-setupTestDB('.env.test');
+setupTestDB('.env.template');
 
 describe('Profile Routes', () => {
   it('should create a new profile', async () => {

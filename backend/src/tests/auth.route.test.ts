@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../app';
 import { setupTestDB } from './testSetup';
 
-setupTestDB('.env.test');
+setupTestDB('.env.template');
 
 describe('Auth Routes', () => {
   it('should register a new user', async () => {
