@@ -4,7 +4,7 @@ export const loadEnv = (path?: string) => {
   if (path) {
     dotenv.config({ path });
   } else {
-    // Default: .env in CWD *and* whatever the environment already has
+    // Default: .env.compose in CWD *and* whatever the environment already has
     dotenv.config();
   }
 

@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import Profile, { IProfile } from '../models/Profile';
 import mongoose, { FilterQuery } from 'mongoose';
 import logger from '../utils/logger';
-import cloudinary from '../config/cloudinary';
 import multer from 'multer';
 import { countWords, isNotBlank } from '../utils/stringUtils';
 import {
@@ -327,7 +326,7 @@ export const getUserStatistics = async (req: Request, res: Response) => {
 const upload = multer({ dest: 'uploads/' });
 
 export const uploadProfilePicture = [
-  upload.single('profilePicture'), // Middleware to handle file uploads
+  upload.single('profilePicture'),
   async (req: Request, res: Response) => {
     try {
       const userId = req.user?.userId;
@@ -339,16 +338,14 @@ export const uploadProfilePicture = [
           .json({ error: 'error.profile_picture_required' });
       }
 
-      // Upload the image to Cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'profile_pictures',
-        transformation: [{ width: 200, height: 200, crop: 'fill' }],
-      });
+      const file = req.file;
 
-      // Update the profile with the new image URL
+      // Build a URL that points to the static /uploads route
+      const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+
       const profile = await Profile.findOneAndUpdate(
         { userId },
-        { profilePicture: uploadResponse.secure_url },
+        { profilePicture: imageUrl },
         { new: true }
       );
 

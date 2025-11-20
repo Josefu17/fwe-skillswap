@@ -8,6 +8,7 @@ import sessionRoutes from './routes/session.route';
 import feedbackRoutes from './routes/feedback.route';
 import cookieParser from 'cookie-parser';
 import messageRoutes from './routes/message.routes';
+import path from 'node:path';
 
 const app = express();
 
@@ -36,6 +37,9 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
+// Static file serving for uploads
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use(express.json());
 app.use(cookieParser());

@@ -18,19 +18,10 @@ services:
     restart: unless-stopped
     depends_on:
       - mongo
+    env_file:
+      - ./backend/.env.compose
     environment:
       NODE_ENV: production
-      MONGO_URI: mongodb://mongo:27017/skill-swap-test
-
-      JWT_SECRET: your_jwt_secret
-      JWT_REFRESH_SECRET: your_refresh_token_secret
-
-      CLOUDINARY_CLOUD_NAME: your_cloud_name
-      CLOUDINARY_API_KEY: your_api_key
-      CLOUDINARY_API_SECRET: your_api_secret
-
-      EMAIL_USER: ""
-      EMAIL_PASS: ""
     ports:
       - "8000:8000"
 

@@ -72,7 +72,7 @@ cd skillswap
 cd backend
 npm install
 
-# create a .env file based on the provided example/template
+# create a .env.compose file based on the provided example/template
 # then start the dev server:
 npm run dev
 ```

@@ -1,8 +1,6 @@
 import multer from 'multer';
 import { Request, Response } from 'express';
-import cloudinary from '../config/cloudinary';
 import logger from '../utils/logger';
-import fs from 'fs';
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
@@ -21,31 +19,25 @@ export const uploadAttachments = async (req: Request, res: Response) => {
       logger.error(`Multer upload error: ${err.message}`);
       return res.status(400).json({ error: err.message });
     }
+
     try {
       const files = (req.files as Express.Multer.File[]) ?? [];
 
-      logger.info(`Uploading ${files.length} files to Cloudinary...`);
+      logger.info(`Saving ${files.length} attachment(s) locally...`);
 
-      const uploadedFiles = await Promise.all(
-        files.map(async (file) => {
-          const mimeType = file.mimetype || '';
-          const uploadResponse = await cloudinary.uploader.upload(file.path, {
-            resource_type: mimeType.includes('image') ? 'image' : 'raw',
-            folder: 'chat_attachments',
-          });
+      const uploadedFiles = files.map((file) => {
+        const mimeType = file.mimetype || '';
+        const type = mimeType.includes('image') ? 'image' : 'pdf';
 
-          fs.unlinkSync(file.path);
+        const url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
 
-          return {
-            url: uploadResponse.secure_url,
-            type: mimeType.includes('image') ? 'image' : 'pdf',
-          };
-        })
-      );
+        return { url, type };
+      });
 
-      logger.info('Files uploaded successfully');
+      logger.info('Attachments processed successfully');
       res.json({ attachments: uploadedFiles });
-    } catch {
+    } catch (error) {
+      logger.error(`Error handling file upload: ${error}`);
       res.status(500).json({ error: 'error.file_upload_error' });
     }
   });
