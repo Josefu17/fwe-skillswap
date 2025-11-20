@@ -1,198 +1,103 @@
-# FWE Skillswap
+# FWE SkillSwap
 
-## Beschreibung
+SkillSwap is a small web platform that combines peer-to-peer learning with light gamification.  
+Users can offer and book sessions, exchange skills, give feedback, and earn points for helping others.
 
-FWE Skillswap ist eine Plattform, die darauf abzielt, Gamification-Elemente und Feedback-Prozesse in Schulungs- und
-Lernumgebungen zu verbessern. Die Plattform fördert den Peer-to-Peer-Austausch von Wissen und Fähigkeiten und
-konzentriert sich auf eine geldfreie Interaktion, die soziale Netzwerke und Lernplattformen verbindet.
-
----
-
-## Inhaltsverzeichnis
-
-1. [Installation](#installation)
-2. [Backend-Funktionalitäten](#backend-funktionalitäten)
-3. [Frontend-Funktionalitäten](#frontend-funktionalitäten)
-4. [API-Endpunkte](#api-endpunkte)
-5. [Datenbankstruktur](#datenbankstruktur)
-6. [Authentifizierung & Sicherheit](#authentifizierung--sicherheit)
-7. [Gamification & Feedback](#gamification--feedback)
-8. [Abhängigkeiten](#abhängigkeiten)
-9. [Konfigurationsdateien](#konfigurationsdateien)
-10. [Mitwirkende](#mitwirkende)
-11. [Lizenz](#lizenz)
+This project was developed in winter 2024 as part of the **“Frontend-Web Entwicklung”** (**"Frontend Web Development")** course at  
+**Hochschule Darmstadt** by a team of [four students](#team).
 
 ---
 
-## Installation
+## Project Status
 
-### Voraussetzungen
-
-- **Node.js** (Version 16 oder höher)
-- **npm**
-- **MongoDB**
-
-### Backend
-
-1. Navigiere in das Backend-Verzeichnis:
-   ```bash
-   cd backend
-   ```
-2. Installiere Abhängigkeiten:
-   ```bash
-   npm install
-   ```
-3. Starte den Entwicklungsserver:
-   ```bash
-   npm run dev
-   ```
-
-### Frontend
-
-1. Navigiere in das Frontend-Verzeichnis:
-   ```bash
-   cd frontend
-   ```
-2. Installiere Abhängigkeiten:
-   ```bash
-   npm install
-   ```
-3. Starte die Entwicklungsumgebung:
-   ```bash
-   npm run dev
-   ```
+This is an educational university project built for a course.  
+It is not actively maintained and is intended primarily as a demonstration of the tech stack and architecture.
 
 ---
 
-## Backend-Funktionalitäten
+## Tech Stack
 
-Das Backend basiert auf **Node.js** mit **Express.js** und kommuniziert mit einer **MongoDB-Datenbank**.
+**Frontend**
 
-### Wichtige Funktionen:
+- React (Vite)
+- TypeScript
+- React Router
+- Axios
+- Socket.IO client
 
-- **Authentifizierung** (JWT-basiert)
-- **Profilverwaltung** (Erstellung, Aktualisierung, Löschung)
-- **Sitzungen & Buchungen** (Terminplanung)
-- **Gamification** (Punktevergabe, Leaderboard)
-- **Feedback-System** (Bewertungen, Kommentare)
-- **Socket.IO** für Echtzeit-Kommunikation
+**Backend**
 
----
-
-## Frontend-Funktionalitäten
-
-Das Frontend ist mit **React (Vite) und TypeScript** entwickelt.
-
-### Kernkomponenten:
-
-- **Benutzerregistrierung & Login**
-- **Dashboard mit Profilverwaltung**
-- **Terminbuchung & Kalender**
-- **Live-Chat & Kommunikation**
-- **Gamification**
-- **Feedback-System**
+- Node.js & Express
+- TypeScript
+- MongoDB with Mongoose
+- JSON Web Tokens (JWT) for auth
+- bcrypt for password hashing
+- Socket.IO for real-time features
 
 ---
 
-## API-Endpunkte
+## Main Features
 
-Das Backend stellt mehrere API-Endpunkte zur Verfügung, die für Authentifizierung, Profilverwaltung, Gamification,
-Kalender, Sitzungen, Feedback und Nachrichten verwendet werden. Eine vollständige Liste ist in der API-Dokumentation zu
-finden.
-
-**Wichtige Endpunkte:**
-
-| Methode | Endpoint                 | Beschreibung             |
-|---------|--------------------------|--------------------------|
-| POST    | /api/auth/register       | Benutzerregistrierung    |
-| POST    | /api/auth/login          | Benutzer-Login           |
-| GET     | /api/profiles/:id        | Einzelnes Profil abrufen |
-| PUT     | /api/profiles/:id        | Profil aktualisieren     |
-| DELETE  | /api/profiles/:id        | Profil löschen           |
-| POST    | /api/sessions            | Sitzung erstellen        |
-| GET     | /api/sessions/:id        | Sitzung abrufen          |
-| PUT     | /api/sessions/:id        | Sitzung aktualisieren    |
-| DELETE  | /api/sessions/:id        | Sitzung löschen          |
-| POST    | /api/feedbacks           | Feedback erstellen       |
-| GET     | /api/gamification/points | Punktestand abrufen      |
-
-Weitere Endpunkte sind direkt im Code einsehbar unter [app](backend/src/app.ts) und [routes](backend/src/routes).
+- User registration, login, and profile management  
+- Create and book skill-sharing sessions
+- Basic calendar / session overview
+- Gamification (points, simple leaderboard)
+- Feedback & ratings for sessions
+- Real-time messaging between users
+- Basic personalization: light/dark mode and multilingual UI (English & German)
 
 ---
 
-## Datenbankstruktur
+## Getting Started
 
-Die Plattform nutzt **MongoDB** für die Speicherung von Daten. Hier sind die wichtigsten Collections:
+### Prerequisites
 
-- **users**: Enthält Benutzerdaten (E-Mail, Passwort-Hash, Rollen, Registrierungshistorie).
-- **profiles**: Speichert Profildaten wie Fähigkeiten, Interessen und persönliche Informationen.
-- **sessions**: Enthält alle geplanten und vergangenen Sitzungen.
-- **feedbacks**: Speichert Bewertungen und Kommentare zu Sitzungen.
-- **gamification**: Enthält Punktestände und Leaderboard-Daten.
+- Node.js (v16+)
+- npm
+- A running MongoDB instance
+- `.env` files for backend configuration (JWT secrets, Mongo URI, etc.)
 
----
+### Quick Start
 
-## Authentifizierung & Sicherheit
+Clone the repository:
 
-- **JWT-Token** zur Authentifizierung
-- **Passwort-Hashing mit bcrypt**
-- **CORS-Schutzmechanismen**
-- **Eingabevalidierung**
+```bash
+git clone <this-repo-url>
+cd skillswap
+````
 
----
+**Backend**
 
-## Gamification & Feedback
+```bash
+cd backend
+npm install
 
-Die Plattform nutzt Gamification, um Benutzer zur aktiven Teilnahme zu motivieren:
-
-- **Punkte sammeln** für das Geben von Wissen
-- **Feedback-System** für Bewertungen & Kommentare
-
----
-
-## Abhängigkeiten
-
-Eine vollständige Liste aller Abhängigkeiten befindet sich in den Dateien [backend/package.json](backend/package.json)
-und [frontend/package.json](frontend/package.json).
-
-**Wichtige Abhängigkeiten:**
-
-- **Backend:** express, mongoose, jsonwebtoken, bcryptjs, socket.io
-- **Frontend:** react, react-router-dom, axios, react-calendar, socket.io-client
-
----
-
-## Konfigurationsdateien
-
-Das Projekt verwendet `.env`-Dateien für Umgebungsvariablen.
-
-### `.env.test` Datei :
-
-```
-MONGO_URI='mongodb://localhost:27017/skill-swap-test'
-JWT_SECRET='your_jwt_secret'
-JWT_REFRESH_SECRET='your_refresh_token_secret'
-CLOUDINARY_CLOUD_NAME=<your_cloud_name>
-CLOUDINARY_API_KEY=<your_api_key>
-CLOUDINARY_API_SECRET=<your_api_secret>
+# create a .env file based on the provided example/template
+# then start the dev server:
+npm run dev
 ```
 
-Bitte die Credentials mit den echten Werten ersetzen und die `.env.test` umbenennen zum `.env`.
+**Frontend**
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend dev server will print the local URL (usually `http://localhost:5173` or similar).
 
 ---
 
-## Mitwirkende
+## Team
 
-| Name           | Rolle                |
-|----------------|----------------------|
-| Dias Baikenov  | Backend-Entwicklung  |
-| Bogdan Polskiy | Backend-Entwicklung  |
-| Yusuf Birdane  | Frontend-Entwicklung |
-| Arian Farzad   | Frontend-Entwicklung |
+Developed collaboratively by four students at Hochschule Darmstadt:
 
----
+* Backend development – **Dias Baikenov**, **Bogdan Polskiy**
+* Frontend development – **Yusuf Birdane**, **Arian Farzad**
 
-## Lizenz
+## License
 
-Dieses Projekt steht unter der **MIT-Lizenz**. Mehr Informationen findest du in der `LICENSE`-Datei.
+This project is licensed under the **MIT License**.
+For details, see the `LICENSE` file.
 
